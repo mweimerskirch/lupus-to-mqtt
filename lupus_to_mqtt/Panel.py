@@ -3,6 +3,7 @@ from lupus_to_mqtt.Connection import Connection
 from lupus_to_mqtt.Logger import Logger
 from lupus_to_mqtt import constants as CONST
 from lupus_to_mqtt.sensor.DoorWindowSensor import DoorWindowSensor
+from lupus_to_mqtt.sensor.PowerSwitch import PowerSwitch
 from lupus_to_mqtt.MQTT import MQTT
 
 
@@ -75,6 +76,10 @@ class Panel:
                     self._mode = CONST.MODE_ARM_HOME1
                     self._mqtt.publish_message(f'{self._device_name}/state', "armed_home")
 
+        # Delegate incoming MQTT messages to each sensor
+        for id in self._sensors:
+            self._sensors[id].onMessage(client, userdata, message, msg_data)
+
     def login(self):
         """Login to the device."""
         self._connection.refreshToken()
@@ -145,6 +150,8 @@ class Panel:
 
         if type == CONST.TYPE_DOOR_WINDOW:
             return DoorWindowSensor(data, self)
+        elif type == CONST.TYPE_POWER_SWITCH_INTERNAL:  # TODO: Add IDs for other switch types
+            return PowerSwitch(data, self)
         else:
             self._logger.logInfo(f'Skipping "{name}", type {type}, area {area}')
         return None

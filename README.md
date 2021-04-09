@@ -9,11 +9,13 @@ Not affiliated with "Lupus Security".
 
 * Arming/disarming the alarm.
 * Door/window sensors status (open/closed).
+* Turning the internal switch on/off.
 
 ## Current limitations
 
 * Only one area is supported (the Lupusec XT3 can theoretically manage two areas).
 * Only one "Home" mode is supported (the Lupusec XT3 can theoretically manage up to three home modes).
+* Sensors without names are ignored.
 
 ## Manual installation
 

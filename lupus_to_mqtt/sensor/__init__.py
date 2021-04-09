@@ -60,3 +60,6 @@ class Sensor(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def sendUpdate(self):
         pass
+
+    def onMessage(self, client, userdata, message, msg_data):
+        pass
