@@ -1,0 +1,14 @@
+[MQTT]
+MQTTServer=1.2.3.4
+MQTTPort=1883
+MQTTKeepalive=45
+MQTTUser=
+MQTTPassword=
+DeviceName=lupus-to-mqtt
+
+[Lupus]
+LupusHost=https://192.168.178.123:8124
+LupusUsername=admin
+LupusPassword=12345678
+Manufacturer=Lupus
+Model=XT3
