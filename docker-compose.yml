@@ -1,0 +1,6 @@
+version: '3.3'
+services:
+  lupus-to-mqtt:
+    image: lupus-to-mqtt
+    volumes:
+      - ./config:/app/config:ro
