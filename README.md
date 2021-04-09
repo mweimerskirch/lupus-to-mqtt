@@ -15,6 +15,36 @@ Not affiliated with "Lupus Security".
 * Only one area is supported (the Lupusec XT3 can theoretically manage two areas).
 * Only one "Home" mode is supported (the Lupusec XT3 can theoretically manage up to three home modes).
 
+## Manual installation
+
+Copy config/config.ini.dist to config/config.ini and adjust the settings to your environment.
+
+Next, you need to install the requirements:
+
+```shell
+pip3 install -r requirements.txt
+```
+
+The application can then be run using:
+
+```shell
+python3 main.py
+```
+## Installation using Docker
+
+Prepare the config file as described above.
+
+You can build your docker image:
+```shell
+docker build -t lupusec2mqtt .
+```
+
+and then run it using docker-compose:
+
+```shell
+docker-compose up
+```
+
 ## Configuring HomeAssistant Lovelace
 
 You can add the following card to your Lovelace UI:
