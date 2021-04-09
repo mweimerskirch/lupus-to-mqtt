@@ -58,22 +58,22 @@ class Panel:
         self._logger.logInfo(f'MQTT message received on "{message.topic}": {msg_data}')
 
         # Change the status: arm/disarm
-        if message.topic == "lupus_xt3/command":
+        if message.topic == f'{self._device_name}/command':
             if msg_data == 'DISARM':
                 result = self.disarm()
                 if result == 1:
                     self._mode = CONST.MODE_DISARM
-                    self._mqtt.publish_message(self._device_name + "/state", "disarmed")
+                    self._mqtt.publish_message(f'{self._device_name}/state', "disarmed")
             elif msg_data == 'ARM_AWAY':
                 result = self.arm_away()
                 if result == 1:
                     self._mode = CONST.MODE_ARM_AWAY
-                    self._mqtt.publish_message(self._device_name + "/state", "armed_away")
+                    self._mqtt.publish_message(f'{self._device_name}/state', "armed_away")
             elif msg_data == 'ARM_HOME':
                 result = self.arm_home1()
                 if result == 1:
                     self._mode = CONST.MODE_ARM_HOME1
-                    self._mqtt.publish_message(self._device_name + "/state", "armed_home")
+                    self._mqtt.publish_message(f'{self._device_name}/state', "armed_home")
 
     def login(self):
         """Login to the device."""
