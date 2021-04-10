@@ -4,7 +4,7 @@ MQTTPort=1883
 MQTTKeepalive=45
 MQTTUser=
 MQTTPassword=
-DeviceName=lupus-to-mqtt
+DeviceName=lupus_to_mqtt
 
 [Lupus]
 LupusHost=https://192.168.178.123:8124

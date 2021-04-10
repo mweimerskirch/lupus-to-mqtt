@@ -21,6 +21,9 @@ Not affiliated with "Lupus Security".
 
 Copy config/config.ini.dist to config/config.ini and adjust the settings to your environment.
 
+* The "DeviceName" is used for the MQTT paths as well as for the entity names in Home Assistant, so only use alphanumerical characters or underscore.
+* The "Manufacturer" and "Model" are used for the labels in the HomeAssistant entity list.
+
 Next, you need to install the requirements:
 
 ```shell
@@ -56,6 +59,8 @@ type: alarm-panel
 states:
   - arm_away
   - arm_home
-entity: alarm_control_panel.lupus_xt3
+entity: alarm_control_panel.lupus_to_mqtt
 name: Alarmzentral
 ``` 
+
+The suffix "lupus_to_mqtt" corresponds to whatever you set as the device id in your config file.
