@@ -33,6 +33,8 @@ class Panel:
             "availability_topic": self._device_name + "/availability",
             "command_topic": self._device_name + "/command",
             "state_topic": self._device_name + "/state",
+            "code_arm_required": False,
+            "code_disarm_required": False,
             "device": {
                 "identifiers": 12345,
                 "manufacturer": self._manufacturer,
