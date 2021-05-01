@@ -22,6 +22,8 @@ LupusPassword = config['Lupus']['LupusPassword']
 Manufacturer = config['Lupus']['Manufacturer']
 Model = config['Lupus']['Model']
 
+AlarmStatuses = config['Sensors']['AlarmStatuses'].split(',')
+
 logger = Logger.getInstance()
 
 
@@ -40,7 +42,7 @@ def on_message(client, userdata, message):
 if __name__ == '__main__':
     mqtt = MQTT(MQTTServer, MQTTPort, MQTTKeepalive, MQTTUser, MQTTPassword)
 
-    panel = Panel(DeviceName, LupusHost, LupusUsername, LupusPassword, Manufacturer, Model)
+    panel = Panel(DeviceName, LupusHost, LupusUsername, LupusPassword, Manufacturer, Model, AlarmStatuses)
 
     # Define the mqtt callbacks
     mqtt.client.on_connect = on_connect

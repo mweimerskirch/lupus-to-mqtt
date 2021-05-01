@@ -10,6 +10,7 @@ Not affiliated with "Lupus Security".
 * Arming/disarming the alarm.
 * Door/window sensors status (open/closed).
 * Turning the internal switch on/off.
+* Reporting alarm states (burglar, doorbell, etc). See config.ini.dist for full list.
 
 ## Current limitations
 

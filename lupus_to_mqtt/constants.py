@@ -21,3 +21,19 @@ MODES_MAP = {
     MODE_ARM_HOME1: 'armed_home',
     MODE_ARM_HOME2: 'armed_night',
 }
+
+# List of supported alarm statuses
+SUPPORTED_ALARM_STATUSES = [
+    'BURGLAR',
+    'DOORBELL',
+    'SMOKE',
+    'MEDICAL',
+    'WATER',
+    'PANIC',
+    'EMERGENCY',
+    'FIRE',
+    'CO',
+    'EMERGENCY',
+    'GAS',
+    'HEAT'
+]

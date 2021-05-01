@@ -31,13 +31,15 @@ class DoorWindowSensor(Sensor):
         self.sendUpdate()
 
     def updateFromData(self, data):
+        newAlarmStatus = data.get('alarm_status')
         newOpenClose = int(data.get('openClose'))
 
-        if self._openClose != newOpenClose:
+        if self._openClose != newOpenClose or self._alarm_status != newAlarmStatus:
             updated = True
         else:
             updated = False
 
+        self._alarm_status = newAlarmStatus
         self._openClose = newOpenClose  # Binary sensors only
 
         return updated

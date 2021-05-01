@@ -12,3 +12,8 @@ LupusUsername=admin
 LupusPassword=12345678
 Manufacturer=Lupus
 Model=XT3
+
+[Sensors]
+# Comma separated list (without spaces) of alarm states for which you would like to create a binary sensor.
+# Supported values are: BURGLAR, DOORBELL, SMOKE, MEDICAL, WATER, PANIC, EMERGENCY, FIRE, CO, EMERGENCY, GAS, HEAT
+AlarmStatuses=DOORBELL,BURGLAR
