@@ -42,7 +42,7 @@ Prepare the config file as described above.
 
 You can build your docker image:
 ```shell
-docker build -t lupusec2mqtt .
+docker build -t lupus-to-mqtt .
 ```
 
 and then run it using docker-compose:
