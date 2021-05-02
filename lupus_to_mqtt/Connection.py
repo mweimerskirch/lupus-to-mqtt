@@ -47,7 +47,7 @@ class Connection:
         """Build the HTTP request for a POST action."""
         if params is None:
             params = {}
-        response = self.session.post(self.api_url + action, data=params, headers=self.headers)
+        response = self.session.post(self.api_url + action, timeout=15, data=params, headers=self.headers)
         self._logger.logDebug(f'Sent POST to {action}. Response: {response.status_code}')
         return response
 
