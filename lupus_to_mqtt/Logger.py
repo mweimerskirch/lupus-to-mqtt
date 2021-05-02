@@ -24,7 +24,7 @@ class Logger:
 
     def getTimestamp(self):
         """Get timestamp for the log message."""
-        return time.strftime("%d-%m-%Y %H:%M:%S", time.gmtime())
+        return time.strftime("%d-%m-%Y %H:%M:%S", time.localtime())
 
     def logDebug(self, message):
         """Output an "debug" type log message."""
