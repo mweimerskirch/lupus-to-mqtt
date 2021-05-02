@@ -39,7 +39,6 @@ class Panel:
             "code_arm_required": False,
             "code_disarm_required": False,
             "device": {
-                "identifiers": 12345,
                 "manufacturer": self._manufacturer,
                 "model": self._model,
                 "name": self._device_name,
