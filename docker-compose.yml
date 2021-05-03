@@ -2,6 +2,6 @@ version: '3.3'
 services:
   lupus-to-mqtt:
     image: lupus-to-mqtt
-    restart: always
+    restart: on-failure
     volumes:
       - ./config:/app/config:ro
