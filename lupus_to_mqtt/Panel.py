@@ -9,11 +9,11 @@ from lupus_to_mqtt.MQTT import MQTT
 
 class Panel:
     """Class representing an alarm device."""
-    def __init__(self, device_name, host, username, password, manufacturer, model, alarm_statuses):
+    def __init__(self, device_name, host, username, password, manufacturer, model, alarm_statuses, verify_ssl):
         self._device_name = device_name
         self._mqtt = MQTT.getInstance()
         self._logger = Logger.getInstance()
-        self._connection = Connection(host, username, password)
+        self._connection = Connection(host, username, password, verify_ssl)
         self._mode = CONST.MODE_DISARM
         self._sensors = {}
         self._manufacturer = manufacturer

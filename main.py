@@ -1,6 +1,8 @@
 import configparser
 import os
 import time
+from distutils.util import strtobool
+
 from lupus_to_mqtt.Panel import Panel
 from lupus_to_mqtt.Logger import Logger
 from lupus_to_mqtt.MQTT import MQTT
@@ -21,6 +23,7 @@ LupusUsername = config['Lupus']['LupusUsername']
 LupusPassword = config['Lupus']['LupusPassword']
 Manufacturer = config['Lupus']['Manufacturer']
 Model = config['Lupus']['Model']
+VerifySSL = bool(strtobool(config['Lupus']['VerifySSL']))
 
 AlarmStatuses = config['Sensors']['AlarmStatuses'].split(',')
 
@@ -42,7 +45,7 @@ def on_message(client, userdata, message):
 if __name__ == '__main__':
     mqtt = MQTT(MQTTServer, MQTTPort, MQTTKeepalive, MQTTUser, MQTTPassword)
 
-    panel = Panel(DeviceName, LupusHost, LupusUsername, LupusPassword, Manufacturer, Model, AlarmStatuses)
+    panel = Panel(DeviceName, LupusHost, LupusUsername, LupusPassword, Manufacturer, Model, AlarmStatuses, VerifySSL)
 
     # Define the mqtt callbacks
     mqtt.client.on_connect = on_connect

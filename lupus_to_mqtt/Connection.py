@@ -1,6 +1,7 @@
 import demjson
 from lupus_to_mqtt.Logger import Logger
 import requests
+import urllib3
 
 
 class Connection:
@@ -12,7 +13,7 @@ class Connection:
         """Static access method (singleton pattern)."""
         return Connection._instance
 
-    def __init__(self, host, username, password):
+    def __init__(self, host, username, password, verify_ssl):
         """Virtually private constructor (singleton pattern)."""
         if Connection._instance is not None:
             raise Exception("This class is a singleton!")
@@ -22,6 +23,11 @@ class Connection:
         self.session.auth = (username, password)
         self.api_url = "{}/action/".format(host)
         self.headers = None
+        self.verify = verify_ssl
+
+        # Disable SSL warnings if "VerifySSL" is set to false in the configuration
+        if not self.verify:
+            urllib3.disable_warnings()
 
         self._logger = Logger.getInstance()
 
@@ -39,7 +45,7 @@ class Connection:
 
     def _request_get(self, action):
         """Build the HTTP request for a GET action."""
-        response = self.session.get(self.api_url + action, timeout=15, headers=self.headers)
+        response = self.session.get(self.api_url + action, timeout=15, headers=self.headers, verify=self.verify)
         self._logger.logDebug(f'Sent GET to {action}. Response: {response.status_code}')
         return response
 
@@ -47,7 +53,7 @@ class Connection:
         """Build the HTTP request for a POST action."""
         if params is None:
             params = {}
-        response = self.session.post(self.api_url + action, timeout=15, data=params, headers=self.headers)
+        response = self.session.post(self.api_url + action, timeout=15, data=params, headers=self.headers, verify=self.verify)
         self._logger.logDebug(f'Sent POST to {action}. Response: {response.status_code}')
         return response
 
