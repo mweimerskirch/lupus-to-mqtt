@@ -51,6 +51,27 @@ and then run it using docker-compose:
 docker-compose up
 ```
 
+## Moving the Docker image to another host
+
+On the development server (where you built the docker image):
+
+```shell
+# Export the image
+docker save -o lupus-to-mqtt.tar lupus-to-mqtt
+# Upload it to the target server
+scp lupus-to-mqtt.tar username@server:/volume1/docker/lupus-to-mqtt/
+```
+
+On the target server:
+
+```shell
+cd /volume1/docker/lupus-to-mqtt/
+# Import the image
+sudo docker load -i lupus-to-mqtt.tar
+```
+
+Afterwards, use docker-compose as above.
+
 ## Configuring HomeAssistant Lovelace
 
 You can add the following card to your Lovelace UI:
