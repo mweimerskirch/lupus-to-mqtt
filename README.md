@@ -1,7 +1,7 @@
 # Lupus-to-MQTT
 
 Home Assistant integration for Lupus Security (also known as "Lupusec") alarm devices through MQTT.
-Currently only tested with the **Lupusec XT3** model.
+Tested with the **Lupusec XT2 Plus** and **Lupusec XT3** models.
 
 This is a private project. It's not affiliated with or endorsed by "Lupus Security".
 The source code is published as open source under the _MIT license_.
