@@ -1,14 +1,17 @@
 import json
+
+from lupus_to_mqtt import constants as CONST
 from lupus_to_mqtt.Connection import Connection
 from lupus_to_mqtt.Logger import Logger
-from lupus_to_mqtt import constants as CONST
+from lupus_to_mqtt.MQTT import MQTT
+from lupus_to_mqtt.sensor.AlarmSensor import AlarmSensor
 from lupus_to_mqtt.sensor.DoorWindowSensor import DoorWindowSensor
 from lupus_to_mqtt.sensor.PowerSwitch import PowerSwitch
-from lupus_to_mqtt.MQTT import MQTT
 
 
 class Panel:
     """Class representing an alarm device."""
+
     def __init__(self, device_name, host, username, password, manufacturer, model, alarm_statuses, verify_ssl):
         self._device_name = device_name
         self._mqtt = MQTT.getInstance()
@@ -151,7 +154,7 @@ class Panel:
         for data in sensors:
             sensor = self.newSensor(data)
             if sensor is not None:
-                 self._sensors[data.get('sid')] = sensor
+                self._sensors[data.get('sid')] = sensor
 
     def sendPanelUpdates(self):
         """Send the current status (disarmed, armed_away, armed_home) to MQTT."""
@@ -204,6 +207,8 @@ class Panel:
             return DoorWindowSensor(data, self)
         elif type == CONST.TYPE_POWER_SWITCH_INTERNAL:  # TODO: Add IDs for other switch types
             return PowerSwitch(data, self)
+        elif type in CONST.TYPE_ALARM:
+            return AlarmSensor(data, self)
         else:
             self._logger.logInfo(f'Skipping "{name}", type {type}, area {area}')
         return None

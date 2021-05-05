@@ -1,17 +1,16 @@
 import json
 
 from lupus_to_mqtt.MQTT import MQTT
-from . import Sensor
+from . import AlarmSensor
 
 
-class DoorWindowSensor(Sensor):
+class DoorWindowSensor(AlarmSensor.AlarmSensor):
     """Class representing a door/window switch."""
 
     def __init__(self, data, panel):
-        super().__init__(data, panel)
-
         self._openClose = int(data.get('openClose'))  # Binary sensors only
-        self.registerDevice()
+
+        super().__init__(data, panel)
 
     def registerDevice(self):
         mqtt = MQTT.getInstance()
@@ -31,15 +30,13 @@ class DoorWindowSensor(Sensor):
         self.sendUpdate()
 
     def updateFromData(self, data):
-        newAlarmStatus = data.get('alarm_status')
         newOpenClose = int(data.get('openClose'))
 
-        if self._openClose != newOpenClose or self._alarm_status != newAlarmStatus:
-            updated = True
-        else:
-            updated = False
+        updated = super().updateFromData(data)
 
-        self._alarm_status = newAlarmStatus
+        if self._openClose != newOpenClose:
+            updated = True
+
         self._openClose = newOpenClose  # Binary sensors only
 
         return updated

@@ -16,7 +16,6 @@ class PowerSwitch(Sensor):
         self._always_off = int(data.get('always_off'))  # Power switches only
         self._logger = Logger.getInstance()
         self._connection = Connection.getInstance()
-        self.registerDevice()
 
     def registerDevice(self):
         mqtt = MQTT.getInstance()
@@ -41,10 +40,10 @@ class PowerSwitch(Sensor):
         newOnOff = int(data.get('onOff'))
         newAlwaysOff = int(data.get('always_off'))
 
+        updated = super().updateFromData(data)
+
         if self._onOff != newOnOff or self._always_off != newAlwaysOff:
             updated = True
-        else:
-            updated = False
 
         self._onOff = newOnOff  # Binary sensors only
         self._openClose = newAlwaysOff  # Binary sensors only

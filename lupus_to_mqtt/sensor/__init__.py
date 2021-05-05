@@ -1,5 +1,7 @@
 import abc
+
 from lupus_to_mqtt import constants as CONST
+
 
 class Sensor(metaclass=abc.ABCMeta):
     def __init__(self, data, panel):
@@ -23,13 +25,14 @@ class Sensor(metaclass=abc.ABCMeta):
         self._sid = data.get('sid')
         self._id = self._sid.replace(':', '_')
         self._su = data.get('su')
-        self._alarm_status = data.get('alarm_status')
         self._status_ex = data.get('status_ex')
         self._resp_mode = data.get('resp_mode')
 
         self._is_doorbell = CONST.RESPONSE_DOORBELL in self._resp_mode
 
         self._panel = panel
+
+        self.registerDevice()
 
     # def update(self, json_state):
     #     if self._type in CONST.TYPE_BINARY_SENSOR:
@@ -54,15 +57,12 @@ class Sensor(metaclass=abc.ABCMeta):
     def isDoorbell(self):
         return self._is_doorbell
 
-    @property
-    def alarmStatus(self):
-        return self._alarm_status
-
-    def isBurglarAlarm(self):
-        return self._alarm_status == 'BURGLAR'
+    def updateFromData(self, data):
+        updated = False
+        return updated
 
     @abc.abstractmethod
-    def updateFromData(self, data):
+    def registerDevice(self):
         pass
 
     @abc.abstractmethod
