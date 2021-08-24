@@ -6,14 +6,14 @@ from lupus_to_mqtt.Connection import Connection
 from . import Sensor
 
 
-class PowerSwitch(Sensor):
+class Shutter(Sensor):
     """Class representing a power switch."""
 
     def __init__(self, data, panel):
         super().__init__(data, panel)
 
-        self._onOff = int(data.get('onOff'))  # Power switches only
-        self._always_off = int(data.get('always_off'))  # Power switches only
+        self._onOff = int(data.get('onOff'))
+        self._level = int(data.get('level'))
         self._logger = Logger.getInstance()
         self._connection = Connection.getInstance()
 
@@ -38,25 +38,27 @@ class PowerSwitch(Sensor):
 
     def updateFromData(self, data):
         newOnOff = int(data.get('onOff'))
-        newAlwaysOff = int(data.get('always_off'))
+        newLevel = int(data.get('level'))
 
         updated = super().updateFromData(data)
 
-        if self._onOff != newOnOff or self._always_off != newAlwaysOff:
+        if self._onOff != newOnOff or self.level != newLevel:
             updated = True
 
         self._onOff = newOnOff  # Binary sensors only
-        self._always_off = newAlwaysOff  # Binary sensors only
+        self._level = newLevel  # Binary sensors only
 
         return updated
 
     def sendUpdate(self):
         mqtt = MQTT.getInstance()
-        mqtt.publish_message(f'{self._panel.device_name}/{self._id}/state', ('OFF', 'ON')[self._onOff])
+        mqtt.publish_message(f'{self._panel.device_name}/{self._id}/state', self._level)
 
     def onMessage(self, client, userdata, message, msg_data):
         if message.topic == f'{self._panel.device_name}/{self._id}/set':
             if msg_data == 'ON':
-                self._connection.post('haExecutePost', {'exec': f'a={self._area}&z={self._zone}&sw=on'})
+                self._connection.post('haExecutePost', {'exec': f'a={self._area}&z={self._zone}&shutter=100'})
             elif msg_data == 'OFF':
-                self._connection.post('haExecutePost', {'exec': f'a={self._area}&z={self._zone}&sw=off'})
+                self._connection.post('haExecutePost', {'exec': f'a={self._area}&z={self._zone}&shutter=0'})
+            else:
+                self._connection.post('haExecutePost', {'exec': f'a={self._area}&z={self._zone}&shutter={msg_data}'})

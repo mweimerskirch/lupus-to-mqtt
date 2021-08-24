@@ -7,7 +7,7 @@ from lupus_to_mqtt.MQTT import MQTT
 from lupus_to_mqtt.sensor.AlarmSensor import AlarmSensor
 from lupus_to_mqtt.sensor.DoorWindowSensor import DoorWindowSensor
 from lupus_to_mqtt.sensor.PowerSwitch import PowerSwitch
-
+from lupus_to_mqtt.sensor.Shutter import Shutter
 
 class Panel:
     """Class representing an alarm device."""
@@ -212,6 +212,8 @@ class Panel:
             return PowerSwitch(data, self)
         elif type in CONST.TYPE_ALARM:
             return AlarmSensor(data, self)
+        elif type in CONST.TYPE_SHUTTER:
+            return Shutter(data, self)
         else:
             self._logger.logInfo(f'Skipping "{name}", type {type}, area {area}')
         return None
