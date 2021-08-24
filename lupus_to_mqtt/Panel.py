@@ -176,10 +176,11 @@ class Panel:
                 if updated:
                     sensor.sendUpdate()
                 # If this sensor has an alarm state, add it to the list of active states
-                if sensor.alarmStatus:
-                    self._logger.logInfo(f'Sensor {sensor} has alarm status {sensor.alarmStatus}')
-                    if sensor.alarmStatus not in active_statuses:
-                        active_statuses.append(sensor.alarmStatus)
+                if hasattr(sensor,"alarmStatus"):
+                    if sensor.alarmStatus:
+                        self._logger.logInfo(f'Sensor {sensor} has alarm status {sensor.alarmStatus}')
+                        if sensor.alarmStatus not in active_statuses:
+                            active_statuses.append(sensor.alarmStatus)
 
         # If any sensor has an alarm state, update the state on MQTT
         for alarm_status in self._alarm_statuses:
@@ -212,7 +213,7 @@ class Panel:
             return PowerSwitch(data, self)
         elif type in CONST.TYPE_ALARM:
             return AlarmSensor(data, self)
-        elif type in CONST.TYPE_SHUTTER:
+        elif type == CONST.TYPE_SHUTTER:
             return Shutter(data, self)
         else:
             self._logger.logInfo(f'Skipping "{name}", type {type}, area {area}')

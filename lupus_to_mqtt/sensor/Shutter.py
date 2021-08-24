@@ -7,7 +7,7 @@ from . import Sensor
 
 
 class Shutter(Sensor):
-    """Class representing a power switch."""
+    """Class representing a shutter."""
 
     def __init__(self, data, panel):
         super().__init__(data, panel)
@@ -42,11 +42,11 @@ class Shutter(Sensor):
 
         updated = super().updateFromData(data)
 
-        if self._onOff != newOnOff or self.level != newLevel:
+        if self._onOff != newOnOff or self._level != newLevel:
             updated = True
 
-        self._onOff = newOnOff  # Binary sensors only
-        self._level = newLevel  # Binary sensors only
+        self._onOff = newOnOff
+        self._level = newLevel
 
         return updated
 
