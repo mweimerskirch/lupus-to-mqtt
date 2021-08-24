@@ -10,10 +10,10 @@ class Shutter(Sensor):
     """Class representing a shutter."""
 
     def __init__(self, data, panel):
-        super().__init__(data, panel)
-
         self._onOff = int(data.get('onOff'))
         self._level = int(data.get('level'))
+        super().__init__(data, panel)
+
         self._logger = Logger.getInstance()
         self._connection = Connection.getInstance()
 
