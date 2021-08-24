@@ -204,7 +204,10 @@ class Panel:
             return None
 
         if type == CONST.TYPE_DOOR_WINDOW:
-            return DoorWindowSensor(data, self)
+            if data.get('openClose') is not None:
+                return DoorWindowSensor(data, self)
+            else:
+                return None
         elif type == CONST.TYPE_POWER_SWITCH_INTERNAL:  # TODO: Add IDs for other switch types
             return PowerSwitch(data, self)
         elif type in CONST.TYPE_ALARM:
