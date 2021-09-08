@@ -31,6 +31,8 @@ class Sensor(metaclass=abc.ABCMeta):
         self._is_doorbell = CONST.RESPONSE_DOORBELL in self._resp_mode
 
         self._panel = panel
+        self._level = 0
+        self._onOff = 0
 
         self.registerDevice()
 
